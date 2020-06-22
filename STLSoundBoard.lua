@@ -70,6 +70,10 @@ function STLClassColor(charName)
     return STLClassColors[STLCharacters[charName]]
 end
 
+local critWindowStartTime = 0
+local critWindowOwner = ""
+local critWindowCount = 0
+
 local f = CreateFrame("Frame")
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 f:SetScript("OnEvent", function(self, event)
@@ -102,6 +106,7 @@ function f:OnEvent(event, ...)
         local MSG_POLYMORPH_EFFECT = "|c%s%s *IS* turtley enough for the Turtle Club!"
         print(MSG_POLYMORPH_EFFECT:format(STLClassColor(sourceName), destName))
         PlaySoundFile(STLSoundFolder .. "TurtleTurtle.mp3", STLSoundChannel)
+        return
     end
 
     --
@@ -109,6 +114,7 @@ function f:OnEvent(event, ...)
     --
     if recapId and STLDeathSounds[destName] then
         PlaySoundFile(STLDeathSounds[destName], STLSoundChannel)
+        return
     end
 
     --
@@ -119,6 +125,7 @@ function f:OnEvent(event, ...)
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically healed %s for %d health!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
         PlaySoundFile(STLHealSounds[sourceName], STLSoundChannel)
+        return
     end
 
     --
@@ -128,6 +135,23 @@ function f:OnEvent(event, ...)
         local action = spellName or MELEE
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
-        PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
+
+        currentTime = time()
+        if currentTime >= critWindowStartTime then
+            critWindowStartTime = currentTime + 4 + random(3)
+
+            if sourceName == critWindowOwner then
+                critWindowCount = critWindowCount + 1
+            else
+                critWindowOwner = sourceName
+                critWindowCount = 1
+            end
+            if critWindowCount >= 3 then
+                critWindowCount = 1
+                PlaySoundFile(STLSoundFolder .. "OhBabyATriple.mp3", STLSoundChannel)
+            else
+                PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
+            end
+        end
     end
 end
