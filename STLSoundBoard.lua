@@ -87,6 +87,20 @@ function f:OnEvent(event, ...)
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\Hallelujah.mp3", "Master")
     end
 
+    if critical and sourceName == "Luger" then
+        local action = spellName or MELEE
+        local MSG_CRITICAL_HIT = "|cffa9d271%s's %s critically hit %s for %d damage!"
+        print(MSG_CRITICAL_HIT:format(sourceName, action, destName, amount))
+        PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\GunShow.mp3", "Master")
+    end
+
+    if critical and sourceName == "Resaris" then
+        local action = spellName or MELEE
+        local MSG_CRITICAL_HIT = "|cfffff569%s's %s critically hit %s for %d damage!"
+        print(MSG_CRITICAL_HIT:format(sourceName, action, destName, amount))
+        PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\GunShow.mp3", "Master")
+    end
+
     if critical and sourceName == "Panserbjørn" and subevent == "SWING_DAMAGE" then
         local action = MELEE
         local MSG_CRITICAL_HIT = "|cffff7d0a%s's %s critically hit %s for %d damage!"
