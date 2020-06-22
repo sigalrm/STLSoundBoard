@@ -20,7 +20,7 @@ end)
 function f:OnEvent(event, ...)
     --print(CombatLogGetCurrentEventInfo())
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
-    local spellId, spellName, spellSchool
+    local spellId, spellName, spellSchool, recapId, unconscious
     local amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand
 
     if subevent == "SWING_DAMAGE" then
@@ -31,6 +31,8 @@ function f:OnEvent(event, ...)
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
     elseif subevent == "SPELL_AURA_APPLIED" then
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
+    elseif subevent == "UNIT_DIED" then
+        recapId, unconscious = select(12, ...)
     end
 
     --
@@ -40,6 +42,27 @@ function f:OnEvent(event, ...)
         local MSG_POLYMORPH_EFFECT = "|cff40c7eb%s *IS* turtley enough for the Turtle Club!"
         print(MSG_POLYMORPH_EFFECT:format(destName))
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\TurtleTurtle.mp3", "Master")
+    end
+
+    --
+    -- Deaths
+    --
+    if recapId then
+        if destName == "Powerthirst" or destName == "Beveryman" or destName == "Rawberry" then
+            PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\NixonGrumble.mp3", "Master")
+        end
+        if destName == "Crumbles" or destName == "Bombola" then
+            PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\KennedySpirit.mp3", "Master")
+        end
+        if destName == "Heboric" or destName == "Luger" or destName == "Resaris" then
+            PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\Wiggam.mp3", "Master")
+        end
+        if destName == "Shmeeshmaam" or destName == "Harumph" then
+            PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\MarioDeath.mp3", "Master")
+        end
+        if destName == "Panserbjørn" then
+            PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\ComingRightForUs.mp3", "Master")
+        end
     end
 
     --
