@@ -66,6 +66,27 @@ local STLDeathSounds = {
     ["Shmeeshmaam"] = STLSoundFolder .. "MarioDeath.mp3",
 }
 
+local STLCritRecords = {
+    ["Beveryman"] = 0,
+    ["Bombola"] = 0,
+    ["Crumbles"] = 0,
+    ["Funkyphantom"] = 0,
+    ["Harumph"] = 0,
+    ["Heboric"] = 0,
+    ["Luger"] = 0,
+    ["Panserbjørn"] = 0,
+    ["Powerthirst"] = 0,
+    ["Rawberry"] = 0,
+    ["Resaris"] = 0,
+    ["Shmeeshmaam"] = 0,
+}
+
+local STLHealRecords = {
+    ["Heboric"] = 0,
+    ["Panserbjørn"] = 0,
+    ["Shmeeshmaam"] = 0,
+}
+
 function STLClassColor(charName)
     return STLClassColors[STLCharacters[charName]]
 end
@@ -124,7 +145,13 @@ function f:OnEvent(event, ...)
         local action = spellName
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically healed %s for %d health!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
-        PlaySoundFile(STLHealSounds[sourceName], STLSoundChannel)
+
+        if amount > STLHealRecords[sourceName] then
+            STLHealRecords[sourceName] = amount
+            PlaySoundFile(STLSoundFolder .. "DamnSon.mp3", STLSoundChannel)
+        else
+            PlaySoundFile(STLHealSounds[sourceName], STLSoundChannel)
+        end
         return
     end
 
@@ -136,6 +163,12 @@ function f:OnEvent(event, ...)
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
 
+        -- Critical record, always sound
+        if amount > STLCritRecords[sourceName] then
+            STLCritRecords[sourceName] = amount
+            PlaySoundFile(STLSoundFolder .. "DamnSon.mp3", STLSoundChannel)
+            return
+        end
         -- Solo play, always sound
         if not IsInGroup() then
             PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
