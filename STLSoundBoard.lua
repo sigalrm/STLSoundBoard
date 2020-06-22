@@ -53,9 +53,9 @@ local STLHealSounds = {
 
 local STLDeathSounds = {
     ["Beveryman"] = STLSoundFolder .. "NixonGrumble.mp3",
-    ["Bombola"] = STLSoundFolder .. "KennedySpirit.mp3",
-    ["Crumbles"] = STLSoundFolder .. "KennedySpirit.mp3",
-    ["Funkyphantom"] = STLSoundFolder .. "MarioDeath.mp3",
+    ["Bombola"] = STLSoundFolder .. "Whatchasay.mp3",
+    ["Crumbles"] = STLSoundFolder .. "Whatchasay.mp3",
+    ["Funkyphantom"] = STLSoundFolder .. "KennedySpirit.mp3",
     ["Harumph"] = STLSoundFolder .. "MarioDeath.mp3",
     ["Heboric"] = STLSoundFolder .. "Wiggam.mp3",
     ["Luger"] = STLSoundFolder .. "Wiggam.mp3",
