@@ -101,8 +101,8 @@ function f:OnEvent(event, ...)
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\GunShow.mp3", "Master")
     end
 
-    if critical and sourceName == "Panserbjørn" and subevent == "SWING_DAMAGE" then
-        local action = MELEE
+    if critical and sourceName == "Panserbjørn" then
+        local action = spellName or MELEE
         local MSG_CRITICAL_HIT = "|cffff7d0a%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(sourceName, action, destName, amount))
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\Angry_Cat.mp3", "Master")
@@ -122,8 +122,8 @@ function f:OnEvent(event, ...)
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\Powerthirst.mp3", "Master")
     end
 
-    if critical and sourceName == "Shmeeshmaam" and subevent == "SWING_DAMAGE" then
-        local action = MELEE
+    if critical and sourceName == "Shmeeshmaam" then
+        local action = spellName or MELEE
         local MSG_CRITICAL_HIT = "|cfff58cba%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(sourceName, action, destName, amount))
         PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\I_Am_The_Law.mp3", "Master")
