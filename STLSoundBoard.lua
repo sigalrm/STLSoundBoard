@@ -136,6 +136,12 @@ function f:OnEvent(event, ...)
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
 
+        -- Solo play, always sound
+        if not IsInGroup() then
+            PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
+            return
+        end
+        -- Group play, use a time window
         currentTime = time()
         if currentTime >= critWindowStartTime then
             critWindowStartTime = currentTime + 4 + random(3)
@@ -147,7 +153,7 @@ function f:OnEvent(event, ...)
                 critWindowCount = 1
             end
             if critWindowCount >= 3 then
-                critWindowCount = 1
+                critWindowCount = 0
                 PlaySoundFile(STLSoundFolder .. "OhBabyATriple.mp3", STLSoundChannel)
             else
                 PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
