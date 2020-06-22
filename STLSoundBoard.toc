@@ -1,7 +1,7 @@
 ## Interface: 11304
-## Title: SampleTextLegends_Crits
+## Title: STLSoundBoard
 ## Author: Shmeeshmaam
 ## Notes: Sound Effects for Sample Text Legends criticals!
 ## Version: 1.0
 
-SampleTextLegends_Crits.lua
+STLSoundBoard.lua
