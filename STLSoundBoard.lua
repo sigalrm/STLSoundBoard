@@ -29,8 +29,22 @@ function f:OnEvent(event, ...)
         spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand = select(12, ...)
     elseif subevent == "SPELL_HEAL" then
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
+    elseif subevent == "SPELL_AURA_APPLIED" then
+        spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
     end
 
+    --
+    -- Spell Effects
+    --
+    if spellName == "Polymorph" and sourceName == "Powerthirst" then
+        local MSG_POLYMORPH_EFFECT = "|cff40c7eb%s *IS* turtley enough for the Turtle Club!"
+        print(MSG_POLYMORPH_EFFECT:format(destName))
+        PlaySoundFile("Interface\\AddOns\\STLSoundBoard\\Sounds\\TurtleTurtle.mp3", "Master")
+    end
+
+    --
+    -- Critical Hits
+    --
     if critical and sourceName == "Beveryman" then
         local action = spellName or MELEE
         local MSG_CRITICAL_HIT = "|cffc79c6e%s's %s critically hit %s for %d damage!"
