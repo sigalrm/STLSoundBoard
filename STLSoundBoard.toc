@@ -1,7 +1,7 @@
 ## Interface: 11304
 ## Title: STLSoundBoard
-## Author: Shmeeshmaam
-## Notes: Sound Effects for Sample Text Legends criticals!
-## Version: 1.0
+## Author: Sample Text Legends
+## Notes: Sound Effects for Sample Text Legends!
+## Version: 1.2
 
 STLSoundBoard.lua
