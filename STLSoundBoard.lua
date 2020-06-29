@@ -28,6 +28,7 @@ local STLCharacters = {
     ["Rawberry"] = "Hunter",
     ["Resaris"] = "Rogue",
     ["Shmeeshmaam"] = "Paladin",
+    ["Shmeetest"] = "Priest",
 }
 
 local STLCritSounds = {
@@ -116,6 +117,8 @@ function f:OnEvent(event, ...)
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
     elseif subevent == "SPELL_AURA_APPLIED" then
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
+    elseif subevent == "SPELL_CAST_START" then
+        spellId, spellName, spellSchool = select(12, ...)
     elseif subevent == "UNIT_DIED" then
         recapId, unconscious = select(12, ...)
     end
@@ -123,10 +126,31 @@ function f:OnEvent(event, ...)
     --
     -- Spell Effects
     --
-    if spellName == "Polymorph" and sourceName == "Powerthirst" then
+    
+        -- Polymorph Turtle
+        --
+    if subevent == "SPELL_AURA_APPLIED" and spellName == "Polymorph" and sourceName == "Powerthirst" then
         local MSG_POLYMORPH_EFFECT = "|c%s%s *IS* turtley enough for the Turtle Club!"
         print(MSG_POLYMORPH_EFFECT:format(STLClassColor(sourceName), destName))
         PlaySoundFile(STLSoundFolder .. "TurtleTurtle.mp3", STLSoundChannel)
+        return
+    end
+        -- Mind Control casting
+        --
+    if subevent == "SPELL_CAST_START" and spellName == "Mind Control" and sourceName == "Heboric" then
+        -- SPELL_CAST_START subevent has nil destName for some reason. GetUnitName is workaround
+        target = GetUnitName("target")
+        local MSG_MIND_CONTROL_EFFECT = "|c%s%s is taking %s's mind! Booweeeeoooo..."
+        print(MSG_MIND_CONTROL_EFFECT:format(STLClassColor(sourceName), sourceName, target))
+        PlaySoundFile(STLSoundFolder .. "Mentok_the_Mindtaker.mp3", STLSoundChannel)
+        return
+    end
+        -- Blessing of Protection
+        --
+    if subevent == "SPELL_AURA_APPLIED" and spellName == "Blessing of Protection" and sourceName == "Shmeeshmaam" then
+        local MSG_BLESSING_OF_PROTECTION_EFFECT = "|c%s%s has been BoPed by %s! No Touchy"
+        print(MSG_BLESSING_OF_PROTECTION_EFFECT:format(STLClassColor(sourceName), destName, sourceName))
+        PlaySoundFile(STLSoundFolder .. "NoTouchy.mp3", STLSoundChannel)
         return
     end
 
