@@ -153,6 +153,22 @@ function f:OnEvent(event, ...)
         PlaySoundFile(STLSoundFolder .. "NoTouchy.mp3", STLSoundChannel)
         return
     end
+        -- Taunt
+        --
+    if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Taunt" or spellName == "Growl") and (sourceName == "Beveryman" or sourceName == "Panserbjørn") then
+        local MSG_TAUNT_SUCCESS = "|c%s%s taunted by %s! Give Uncle Scrotor a hug!"
+        print(MSG_TAUNT_SUCCESS:format(STLClassColor(sourceName), destName, sourceName))
+        PlaySoundFile(STLSoundFolder .. "UncleScrotor.mp3", STLSoundChannel)
+        return
+    end
+        -- Holy Wrath
+        --
+    if subevent == "SPELL_CAST_START" and spellName == "Holy Wrath" and sourceName == "Shmeeshmaam" then
+        local MSG_HOLY_WRATH = "|c%s%s casting Holy Wrath!"
+        print(MSG_HOLY_WRATH:format(STLClassColor(sourceName), sourceName))
+        PlaySoundFile(STLSoundFolder .. "NixonLurcher.mp3", STLSoundChannel)
+        return
+    end
 
     --
     -- Deaths
