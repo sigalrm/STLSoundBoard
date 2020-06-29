@@ -119,6 +119,8 @@ function f:OnEvent(event, ...)
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
     elseif subevent == "SPELL_CAST_START" then
         spellId, spellName, spellSchool = select(12, ...)
+    elseif subevent == "SPELL_CAST_SUCCESS" then
+        spellId, spellName, spellSchool = select(12, ...)
     elseif subevent == "UNIT_DIED" then
         recapId, unconscious = select(12, ...)
     end
@@ -126,48 +128,57 @@ function f:OnEvent(event, ...)
     --
     -- Spell Effects
     --
-    
+    if STLCharacters[sourceName] then
         -- Polymorph Turtle
         --
-    if subevent == "SPELL_AURA_APPLIED" and spellName == "Polymorph" and sourceName == "Powerthirst" then
-        local MSG_POLYMORPH_EFFECT = "|c%s%s *IS* turtley enough for the Turtle Club!"
-        print(MSG_POLYMORPH_EFFECT:format(STLClassColor(sourceName), destName))
-        PlaySoundFile(STLSoundFolder .. "TurtleTurtle.mp3", STLSoundChannel)
-        return
-    end
+        if subevent == "SPELL_AURA_APPLIED" and spellName == "Polymorph" then
+            local MSG_POLYMORPH_EFFECT = "|c%s%s *IS* turtley enough for the Turtle Club!"
+            print(MSG_POLYMORPH_EFFECT:format(STLClassColor(sourceName), destName))
+            PlaySoundFile(STLSoundFolder .. "TurtleTurtle.mp3", STLSoundChannel)
+            return
+        end
         -- Mind Control casting
         --
-    if subevent == "SPELL_CAST_START" and spellName == "Mind Control" and sourceName == "Heboric" then
-        -- SPELL_CAST_START subevent has nil destName for some reason. GetUnitName is workaround
-        target = GetUnitName("target")
-        local MSG_MIND_CONTROL_EFFECT = "|c%s%s is taking %s's mind! Booweeeeoooo..."
-        print(MSG_MIND_CONTROL_EFFECT:format(STLClassColor(sourceName), sourceName, target))
-        PlaySoundFile(STLSoundFolder .. "Mentok_the_Mindtaker.mp3", STLSoundChannel)
-        return
-    end
+        if subevent == "SPELL_CAST_START" and spellName == "Mind Control" then
+            -- SPELL_CAST_START subevent has nil destName for some reason. GetUnitName is workaround
+            target = GetUnitName("target")
+            local MSG_MIND_CONTROL_EFFECT = "|c%s%s is taking %s's mind! Booweeeeoooo..."
+            print(MSG_MIND_CONTROL_EFFECT:format(STLClassColor(sourceName), sourceName, target))
+            PlaySoundFile(STLSoundFolder .. "Mentok_the_Mindtaker.mp3", STLSoundChannel)
+            return
+        end
         -- Blessing of Protection
         --
-    if subevent == "SPELL_AURA_APPLIED" and spellName == "Blessing of Protection" and sourceName == "Shmeeshmaam" then
-        local MSG_BLESSING_OF_PROTECTION_EFFECT = "|c%s%s has been BoPed by %s! No Touchy"
-        print(MSG_BLESSING_OF_PROTECTION_EFFECT:format(STLClassColor(sourceName), destName, sourceName))
-        PlaySoundFile(STLSoundFolder .. "NoTouchy.mp3", STLSoundChannel)
-        return
-    end
+        if subevent == "SPELL_AURA_APPLIED" and spellName == "Blessing of Protection" then
+            local MSG_BLESSING_OF_PROTECTION_EFFECT = "|c%s%s has been BoPed by %s! No Touchy"
+            print(MSG_BLESSING_OF_PROTECTION_EFFECT:format(STLClassColor(sourceName), destName, sourceName))
+            PlaySoundFile(STLSoundFolder .. "NoTouchy.mp3", STLSoundChannel)
+            return
+        end
         -- Taunt
         --
-    if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Taunt" or spellName == "Growl") and (sourceName == "Beveryman" or sourceName == "Panserbjørn") then
-        local MSG_TAUNT_SUCCESS = "|c%s%s taunted by %s! Give Uncle Scrotor a hug!"
-        print(MSG_TAUNT_SUCCESS:format(STLClassColor(sourceName), destName, sourceName))
-        PlaySoundFile(STLSoundFolder .. "UncleScrotor.mp3", STLSoundChannel)
-        return
-    end
+        if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Taunt" or spellName == "Growl") then
+            local MSG_TAUNT_SUCCESS = "|c%s%s taunted by %s! Give Uncle Scrotor a hug!"
+            print(MSG_TAUNT_SUCCESS:format(STLClassColor(sourceName), destName, sourceName))
+            PlaySoundFile(STLSoundFolder .. "UncleScrotor.mp3", STLSoundChannel)
+            return
+        end
         -- Holy Wrath
         --
-    if subevent == "SPELL_CAST_START" and spellName == "Holy Wrath" and sourceName == "Shmeeshmaam" then
-        local MSG_HOLY_WRATH = "|c%s%s casting Holy Wrath!"
-        print(MSG_HOLY_WRATH:format(STLClassColor(sourceName), sourceName))
-        PlaySoundFile(STLSoundFolder .. "NixonLurcher.mp3", STLSoundChannel)
-        return
+        if subevent == "SPELL_CAST_START" and spellName == "Holy Wrath" then
+            local MSG_HOLY_WRATH = "|c%s%s casting %s!"
+            print(MSG_HOLY_WRATH:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "NixonLurcher.mp3", STLSoundChannel)
+            return
+        end
+        -- AOE Fear
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Intimidating Shout" or spellName == "Psychic Scream") then
+            local MSG_AOE_FEAR = "|c%s%s cast %s!"
+            print(MSG_AOE_FEAR:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "BattleShout.mp3", STLSoundChannel)
+            return
+        end
     end
 
     --
