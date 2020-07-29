@@ -29,6 +29,7 @@ local STLCharacters = {
     ["Resaris"] = "Rogue",
     ["Shmeeshmaam"] = "Paladin",
     ["Shmeetest"] = "Priest",
+    ["Troffer"] = "Priest",
 }
 
 local STLCritSounds = {
@@ -44,12 +45,14 @@ local STLCritSounds = {
     ["Rawberry"] = STLSoundFolder .. "Powerthirst.mp3",
     ["Resaris"] = STLSoundFolder .. "GunShow.mp3",
     ["Shmeeshmaam"] = STLSoundFolder .. "I_Am_The_Law.mp3",
+    ["Troffer"] = STLSoundFolder .. "Powerthirst.mp3",
 }
 
 local STLHealSounds = {
     ["Heboric"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Panserbjørn"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Shmeeshmaam"] = STLSoundFolder .. "Hallelujah.mp3",
+    ["Troffer"] = STLSoundFolder .. "Hallelujah.mp3",
 }
 
 local STLDeathSounds = {
@@ -65,6 +68,7 @@ local STLDeathSounds = {
     ["Rawberry"] = STLSoundFolder .. "NixonGrumble.mp3",
     ["Resaris"] = STLSoundFolder .. "Wiggam.mp3",
     ["Shmeeshmaam"] = STLSoundFolder .. "MarioDeath.mp3",
+    ["Troffer"] = STLSoundFolder .. "NixonGrumble.mp3",
 }
 
 local STLSpecialCritAbility = {
@@ -92,12 +96,14 @@ local STLCritRecords = {
     ["Rawberry"] = 0,
     ["Resaris"] = 0,
     ["Shmeeshmaam"] = 0,
+    ["Troffer"] = 0,
 }
 
 local STLHealRecords = {
     ["Heboric"] = 0,
     ["Panserbjørn"] = 0,
     ["Shmeeshmaam"] = 0,
+    ["Troffer"] = 0,
 }
 
 function STLClassColor(charName)
