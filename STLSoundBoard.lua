@@ -140,10 +140,8 @@ function f:OnEvent(event, ...)
         -- Mind Control casting
         --
         if subevent == "SPELL_CAST_START" and spellName == "Mind Control" then
-            -- SPELL_CAST_START subevent has nil destName for some reason. GetUnitName is workaround
-            target = GetUnitName("target")
-            local MSG_MIND_CONTROL_EFFECT = "|c%s%s is taking %s's mind! Booweeeeoooo..."
-            print(MSG_MIND_CONTROL_EFFECT:format(STLClassColor(sourceName), sourceName, target))
+            local MSG_MIND_CONTROL_EFFECT = "|c%s%s is taking someone's mind! Booweeeeoooo..."
+            print(MSG_MIND_CONTROL_EFFECT:format(STLClassColor(sourceName), sourceName))
             PlaySoundFile(STLSoundFolder .. "Mentok_the_Mindtaker.mp3", STLSoundChannel)
             return
         end
