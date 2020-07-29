@@ -92,7 +92,7 @@ function STLClassColor(charName)
     return STLClassColors[STLCharacters[charName]]
 end
 
-local critWindowStartTime = 0
+local critWindowTime = 0
 local critWindowOwner = ""
 local critWindowCount = 0
 
@@ -225,8 +225,8 @@ function f:OnEvent(event, ...)
         end
         -- Group play, use a time window
         currentTime = time()
-        if currentTime >= critWindowStartTime then
-            critWindowStartTime = currentTime + 4 + random(3)
+        if currentTime >= critWindowTime then
+            critWindowTime = currentTime + 4 + random(3)
 
             if sourceName == critWindowOwner then
                 critWindowCount = critWindowCount + 1
