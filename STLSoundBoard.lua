@@ -174,7 +174,7 @@ function f:OnEvent(event, ...)
         if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Intimidating Shout" or spellName == "Psychic Scream" or spellName == "Howl of Terror") then
             local MSG_AOE_FEAR = "|c%s%s cast %s!"
             print(MSG_AOE_FEAR:format(STLClassColor(sourceName), sourceName, spellName))
-            PlaySoundFile(STLSoundFolder .. "BattleShout.mp3", STLSoundChannel)
+            PlaySoundFile(STLSoundFolder .. "MarvSkeleton.mp3", STLSoundChannel)
             return
         end
     end
