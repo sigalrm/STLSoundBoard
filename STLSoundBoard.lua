@@ -107,6 +107,7 @@ end
 local critWindowTime = 0
 local critWindowOwner = ""
 local critWindowCount = 0
+local recordWindowTime = 0
 local deathWindowTime = 0
 local deathWindowCount = 0
 local spiderWindowTime = 0
@@ -322,7 +323,11 @@ function f:OnEvent(event, ...)
         -- Critical record, always sound
         if amount > STLCritRecords[sourceName] then
             STLCritRecords[sourceName] = amount
-            PlaySoundFile(STLSoundFolder .. "DamnSon.mp3", STLSoundChannel)
+            currentTime = time()
+            if not IsInGroup() or currentTime > recordWindowTime then
+                recordWindowTime = currentTime + 5
+                PlaySoundFile(STLSoundFolder .. "DamnSon.mp3", STLSoundChannel)
+            end
             return
         end
         -- Solo play, always sound
