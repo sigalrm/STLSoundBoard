@@ -67,6 +67,18 @@ local STLDeathSounds = {
     ["Shmeeshmaam"] = STLSoundFolder .. "MarioDeath.mp3",
 }
 
+local STLSpecialCritAbility = {
+    ["Druid"] = "Moonfire",
+    ["Hunter"] = "Arcane Shot",
+    ["Mage"] = "Fire Blast",
+    ["Paladin"] = "Hammer of Wrath",
+    ["Priest"] = "Mind Blast",
+    ["Rogue"] = "Sinister Strike",
+    ["Shaman"] = "Frost Shock",
+    ["Warlock"] = "Shadowburn",
+    ["Warrior"] = "Execute",
+}
+
 local STLCritRecords = {
     ["Beveryman"] = 0,
     ["Bombola"] = 0,
@@ -95,6 +107,9 @@ end
 local critWindowTime = 0
 local critWindowOwner = ""
 local critWindowCount = 0
+local deathWindowTime = 0
+local deathWindowCount = 0
+local spiderWindowTime = 0
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -103,11 +118,20 @@ f:SetScript("OnEvent", function(self, event)
                 self:OnEvent(event, CombatLogGetCurrentEventInfo())
 end)
 
+function STLCritSound(charName, charClass, action)
+    if STLSpecialCritAbility[charClass] == action then
+        PlaySoundFile(STLSoundFolder .. "BubbRubbWooWoo.mp3", STLSoundChannel)
+    else
+        PlaySoundFile(STLCritSounds[charName], STLSoundChannel)
+    end
+end
+
 function f:OnEvent(event, ...)
     --print(CombatLogGetCurrentEventInfo())
     local timestamp, subevent, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags = ...
     local spellId, spellName, spellSchool, recapId, unconscious
     local amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand
+    local stlCharClass = STLCharacters[sourceName]
 
     if subevent == "SWING_DAMAGE" then
         amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand = select(12, ...)
@@ -128,7 +152,7 @@ function f:OnEvent(event, ...)
     --
     -- Spell Effects
     --
-    if STLCharacters[sourceName] then
+    if stlCharClass then
         -- Polymorph Turtle
         --
         if subevent == "SPELL_AURA_APPLIED" and spellName == "Polymorph" then
@@ -177,13 +201,82 @@ function f:OnEvent(event, ...)
             PlaySoundFile(STLSoundFolder .. "MarvSkeleton.mp3", STLSoundChannel)
             return
         end
+        -- Dash
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Charge" or spellName == "Intercept") then
+            local MSG_DASH = "|c%s%s cast %s!"
+            print(MSG_DASH:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "ToejamDash.mp3", STLSoundChannel)
+            return
+        end
+        -- Lay on Hands
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Lay on Hands" then
+            local MSG_LAY_ON_HANDS = "|c%s%s cast %s! POWER UP!"
+            print(MSG_LAY_ON_HANDS:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "ZanPowerup.mp3", STLSoundChannel)
+            return
+        end
+        -- Target Dummy
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName:sub(-12) == "Target Dummy" then
+            local MSG_TARGET_DUMMY = "|c%s%s deploys %s! Magic Decoy!"
+            print(MSG_TARGET_DUMMY:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "MagicDecoy.mp3", STLSoundChannel)
+            return
+        end
+        -- Battle Shout
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Battle Shout" then
+            local MSG_TARGET_DUMMY = "|c%s%s uses %s!"
+            print(MSG_TARGET_DUMMY:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "Braveheart.mp3", STLSoundChannel)
+        end
+    end
+
+    --
+    -- Buffs
+    --
+    if destName == GetUnitName("player") and subevent == "SPELL_CAST_SUCCESS" then
+        if spellName == "Arcane Intellect" or spellName == "Arcane Brilliance" then
+            PlaySoundFile(STLSoundFolder .. "Indubitably.mp3", STLSoundChannel)
+            return
+        end
+        if spellName == "Power Word: Fortitude" or spellName == "Prayer of Fortitude" then
+            PlaySoundFile(STLSoundFolder .. "NixonFeelGood.mp3", STLSoundChannel)
+            return
+        end
+        if spellName == "Prayer of Spirit" then
+            PlaySoundFile(STLSoundFolder .. "KennedySpirit.mp3", STLSoundChannel)
+            return
+        end
+        if spellName == "Thorns" then
+            PlaySoundFile(STLSoundFolder .. "Thorns.mp3", STLSoundChannel)
+            return
+        end
+        if spellName == "Mark of the Wild" then
+            PlaySoundFile(STLSoundFolder .. "WildThing.mp3", STLSoundChannel)
+            return
+        end
     end
 
     --
     -- Deaths
     --
     if recapId and STLDeathSounds[destName] then
-        PlaySoundFile(STLDeathSounds[destName], STLSoundChannel)
+        currentTime = time()
+        if currentTime >= deathWindowTime then
+            deathWindowCount = 1
+            deathWindowTime = currentTime + 60
+        else
+            deathWindowCount = deathWindowCount + 1
+        end
+        if deathWindowCount >= 3 then
+            deathWindowTime = 0
+            PlaySoundFile(STLSoundFolder .. "Apollo13Medical.mp3", STLSoundChannel)
+        else
+            PlaySoundFile(STLDeathSounds[destName], STLSoundChannel)
+        end
         return
     end
 
@@ -205,9 +298,23 @@ function f:OnEvent(event, ...)
     end
 
     --
+    -- Spider Melee Hits
+    --
+    if amount and STLCharacters[destName] and UnitCreatureFamily(destName .. "-target") == "Spider" then
+        currentTime = time()
+        if currentTime >= spiderWindowTime then
+            spiderWindowTime = currentTime + 180
+            local MSG_SPIDER_HIT = "|c%s%s hit by %s for %d damage! A Tarantula!"
+            print(MSG_SPIDER_HIT:format(STLClassColor(destName), destName, sourceName, amount))
+            PlaySoundFile(STLSoundFolder .. "Tarantula.mp3", STLSoundChannel)
+        end
+        return
+    end
+
+    --
     -- Critical Hits
     --
-    if critical and STLCritSounds[sourceName] then
+    if critical and stlCharClass then
         local action = spellName or MELEE
         local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
         print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
@@ -220,7 +327,7 @@ function f:OnEvent(event, ...)
         end
         -- Solo play, always sound
         if not IsInGroup() then
-            PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
+            STLCritSound(sourceName, stlCharClass, action)
             return
         end
         -- Group play, use a time window
@@ -238,7 +345,7 @@ function f:OnEvent(event, ...)
                 critWindowCount = 0
                 PlaySoundFile(STLSoundFolder .. "OhBabyATriple.mp3", STLSoundChannel)
             else
-                PlaySoundFile(STLCritSounds[sourceName], STLSoundChannel)
+                STLCritSound(sourceName, stlCharClass, action)
             end
         end
     end
