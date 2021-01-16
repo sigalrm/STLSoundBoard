@@ -241,7 +241,7 @@ function f:OnEvent(event, ...)
         end
         -- Vampirism
         --
-        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Vampirism" then
+        if subevent == "SPELL_HEAL" and spellName == "Vampirism" then
             local MSG_VAMPIRISM = "|c%s%s cast %s!"
             print(MSG_VAMPIRISM:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Vampirism.mp3", STLSoundChannel)
