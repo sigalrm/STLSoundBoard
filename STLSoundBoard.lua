@@ -239,6 +239,13 @@ function f:OnEvent(event, ...)
             print(MSG_BATTLE_SHOUT:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Braveheart.mp3", STLSoundChannel)
         end
+        -- Vampirism
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Vampirism" then
+            local MSG_VAMPIRISM = "|c%s%s cast %s!"
+            print(MSG_VAMPIRISM:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "Vampirism.mp3", STLSoundChannel)
+        end
     end
 
     --
