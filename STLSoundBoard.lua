@@ -314,7 +314,7 @@ function f:OnEvent(event, ...)
     --
     -- Spider Melee Hits
     --
-    if amount and STLCharacters[destName] and UnitCreatureFamily(destName .. "-target") == "Spider" then
+    if MELEE and amount > 0 and STLCharacters[destName] and UnitCreatureFamily(destName .. "-target") == "Spider" then
         currentTime = time()
         if currentTime >= spiderWindowTime then
             spiderWindowTime = currentTime + 180
