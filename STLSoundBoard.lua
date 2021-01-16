@@ -238,6 +238,7 @@ function f:OnEvent(event, ...)
             local MSG_BATTLE_SHOUT = "|c%s%s uses %s!"
             print(MSG_BATTLE_SHOUT:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Braveheart.mp3", STLSoundChannel)
+            return
         end
         -- Vampirism
         --
@@ -245,6 +246,7 @@ function f:OnEvent(event, ...)
             local MSG_VAMPIRISM = "|c%s%s cast %s!"
             print(MSG_VAMPIRISM:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Vampirism.mp3", STLSoundChannel)
+            return
         end
     end
 
