@@ -235,8 +235,8 @@ function f:OnEvent(event, ...)
         -- Battle Shout
         --
         if subevent == "SPELL_CAST_SUCCESS" and spellName == "Battle Shout" then
-            local MSG_TARGET_DUMMY = "|c%s%s uses %s!"
-            print(MSG_TARGET_DUMMY:format(STLClassColor(sourceName), sourceName, spellName))
+            local MSG_BATTLE_SHOUT = "|c%s%s uses %s!"
+            print(MSG_BATTLE_SHOUT:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Braveheart.mp3", STLSoundChannel)
         end
     end
