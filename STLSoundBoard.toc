@@ -2,6 +2,6 @@
 ## Title: STLSoundBoard
 ## Author: Sample Text Legends
 ## Notes: Sound Effects for Sample Text Legends!
-## Version: 1.8
+## Version: 1.9
 
 STLSoundBoard.lua
