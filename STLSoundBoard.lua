@@ -144,6 +144,8 @@ function f:OnEvent(event, ...)
         amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand = select(12, ...)
     elseif subevent == "SPELL_DAMAGE" or subevent == "RANGE_DAMAGE" then
         spellId, spellName, spellSchool, amount, overkill, school, resisted, blocked, absorbed, critical, glancing, crushing, isOffHand = select(12, ...)
+    elseif subevent == "SPELL_SUMMON" then
+        spellId, spellName, spellSchool = select(12, ...)
     elseif subevent == "SPELL_HEAL" then
         spellId, spellName, spellSchool, amount, overhealing, absorbed, critical = select(12, ...)
     elseif subevent == "SPELL_AURA_APPLIED" then
@@ -246,6 +248,14 @@ function f:OnEvent(event, ...)
             local MSG_VAMPIRISM = "|c%s%s cast %s!"
             print(MSG_VAMPIRISM:format(STLClassColor(sourceName), sourceName, spellName))
             PlaySoundFile(STLSoundFolder .. "Vampirism.mp3", STLSoundChannel)
+            return
+        end
+        -- Blackblade of Shahram
+        --
+        if subevent == "SPELL_SUMMON" and spellName == "Shahram" then
+            local MSG_SHAHRAM = "|c%s%s summons %s!"
+            print(MSG_SHAHRAM:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "RobotBartender.mp3", STLSoundChannel)
             return
         end
     end
