@@ -274,6 +274,14 @@ function f:OnEvent(event, ...)
             PlaySoundFile(STLSoundFolder .. "FeelSpeedy.mp3", STLSoundChannel)
             return
         end
+        -- Warrior Ulti
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and (spellName == "Recklessness" or spellName == "Retaliation" or spellName == "Shield Wall") then
+            local MSG_RECKLESSNESS = "|c%s%s uses %s!"
+            print(MSG_RECKLESSNESS:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "BeatYouUp.mp3", STLSoundChannel)
+            return
+        end
     end
 
     --
