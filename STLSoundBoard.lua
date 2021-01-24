@@ -258,6 +258,14 @@ function f:OnEvent(event, ...)
             PlaySoundFile(STLSoundFolder .. "RobotBartender.mp3", STLSoundChannel)
             return
         end
+        -- Demonic Sacrifice
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Demonic Sacrifice" then
+            local MSG_DEMONIC_SACRIFICE = "|c%s%s cast %s!"
+            print(MSG_DEMONIC_SACRIFICE:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "HeyGuys.mp3", STLSoundChannel)
+            return
+        end
     end
 
     --
