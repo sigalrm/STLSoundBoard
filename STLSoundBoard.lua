@@ -266,6 +266,14 @@ function f:OnEvent(event, ...)
             PlaySoundFile(STLSoundFolder .. "HeyGuys.mp3", STLSoundChannel)
             return
         end
+        -- Mind Quickening Gem
+        --
+        if subevent == "SPELL_CAST_SUCCESS" and spellName == "Mind Quickening" then
+            local MSG_MIND_QUICKENING = "|c%s%s cast %s!"
+            print(MSG_MIND_QUICKENING:format(STLClassColor(sourceName), sourceName, spellName))
+            PlaySoundFile(STLSoundFolder .. "FeelSpeedy.mp3", STLSoundChannel)
+            return
+        end
     end
 
     --
