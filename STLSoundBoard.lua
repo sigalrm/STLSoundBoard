@@ -89,9 +89,9 @@ local STLSpecialCritAbility = {
     ["Paladin"] = "Hammer of Wrath",
     ["Priest"] = "Mind Blast",
     ["Rogue"] = "Sinister Strike",
-    ["Shaman"] = "Frost Shock",
+    ["Shaman"] = "Earth Shock",
     ["Warlock"] = "Shadowburn",
-    ["Warrior"] = "Execute",
+    ["Warrior"] = "Heroic Strike",
 }
 
 local STLCritRecords = {
