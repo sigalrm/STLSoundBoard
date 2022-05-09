@@ -346,8 +346,8 @@ function f:OnEvent(event, ...)
     --
     if critical and subevent == "SPELL_HEAL" and STLHealSounds[sourceName] and STLCharacters[destName] then
         local action = spellName
-        local MSG_CRITICAL_HIT = "|c%s%s's %s critically healed %s for %d health!"
-        print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
+        -- local MSG_CRITICAL_HIT = "|c%s%s's %s critically healed %s for %d health!"
+        -- print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
 
         if amount > STLHealRecords[sourceName] then
             STLHealRecords[sourceName] = amount
@@ -377,8 +377,8 @@ function f:OnEvent(event, ...)
     --
     if critical and stlCharClass then
         local action = spellName or MELEE
-        local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
-        print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
+        -- local MSG_CRITICAL_HIT = "|c%s%s's %s critically hit %s for %d damage!"
+        -- print(MSG_CRITICAL_HIT:format(STLClassColor(sourceName), sourceName, action, destName, amount))
 
         -- Critical record, always sound
         if amount > STLCritRecords[sourceName] then
