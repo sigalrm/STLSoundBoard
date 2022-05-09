@@ -17,13 +17,16 @@ local STLClassColors = {
 
 local STLCharacters = {
     ["Beveryman"] = "Warrior",
+    ["Blubblub"] = "Warrior",
     ["Bombola"] = "Rogue",
+    ["Crumbbug"] = "Paladin",
     ["Crumbles"] = "Hunter",
     ["Funkyphantom"] = "Warrior",
     ["Harumph"] = "Warlock",
     ["Heboric"] = "Priest",
     ["Luger"] = "Hunter",
     ["Panserbjørn"] = "Druid",
+    ["Pistachu"] = "Shaman",
     ["Powerthirst"] = "Mage",
     ["Rawberry"] = "Hunter",
     ["Resaris"] = "Rogue",
@@ -34,13 +37,16 @@ local STLCharacters = {
 
 local STLCritSounds = {
     ["Beveryman"] = STLSoundFolder .. "Powerthirst.mp3",
+    ["Blubblub"] = STLSoundFolder .. "Powerthirst.mp3",
     ["Bombola"] = STLSoundFolder .. "Zap.mp3",
+    ["Crumbbug"] = STLSoundFolder .. "I_Am_The_Law.mp3",
     ["Crumbles"] = STLSoundFolder .. "Snip_Snap.mp3",
     ["Funkyphantom"] = STLSoundFolder .. "Funky.mp3",
     ["Harumph"] = STLSoundFolder .. "Harumph.mp3",
     ["Heboric"] = STLSoundFolder .. "GunShow.mp3",
     ["Luger"] = STLSoundFolder .. "GunShow.mp3",
     ["Panserbjørn"] = STLSoundFolder .. "Angry_Cat.mp3",
+    ["Pistachu"] = STLSoundFolder .. "GunShow.mp3",
     ["Powerthirst"] = STLSoundFolder .. "Powerthirst.mp3",
     ["Rawberry"] = STLSoundFolder .. "Powerthirst.mp3",
     ["Resaris"] = STLSoundFolder .. "GunShow.mp3",
@@ -49,21 +55,26 @@ local STLCritSounds = {
 }
 
 local STLHealSounds = {
+    ["Crumbbug"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Heboric"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Panserbjørn"] = STLSoundFolder .. "Hallelujah.mp3",
+    ["Pistachu"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Shmeeshmaam"] = STLSoundFolder .. "Hallelujah.mp3",
     ["Troffer"] = STLSoundFolder .. "Hallelujah.mp3",
 }
 
 local STLDeathSounds = {
     ["Beveryman"] = STLSoundFolder .. "NixonGrumble.mp3",
+    ["Blubblub"] = STLSoundFolder .. "MarioDeath.mp3",
     ["Bombola"] = STLSoundFolder .. "Whatchasay.mp3",
     ["Crumbles"] = STLSoundFolder .. "Whatchasay.mp3",
+    ["Crumbbug"] = STLSoundFolder .. "Whatchasay.mp3",
     ["Funkyphantom"] = STLSoundFolder .. "Apollo13Blowup.mp3",
     ["Harumph"] = STLSoundFolder .. "MarioDeath.mp3",
     ["Heboric"] = STLSoundFolder .. "Wiggam.mp3",
     ["Luger"] = STLSoundFolder .. "Wiggam.mp3",
     ["Panserbjørn"] = STLSoundFolder .. "ComingRightForUs.mp3",
+    ["Pistachu"] = STLSoundFolder .. "NixonGrumble.mp3",
     ["Powerthirst"] = STLSoundFolder .. "NixonGrumble.mp3",
     ["Rawberry"] = STLSoundFolder .. "NixonGrumble.mp3",
     ["Resaris"] = STLSoundFolder .. "Wiggam.mp3",
